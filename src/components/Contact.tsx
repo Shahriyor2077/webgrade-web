@@ -4,7 +4,7 @@ import { Send } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Contact() {
-    const [formData, setFormData] = useState({ name: '', phone: '', message: '' })
+    const [formData, setFormData] = useState({ name: '', phone: '', service: '', message: '' })
     const [loading, setLoading] = useState(false)
     const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null)
 
@@ -30,7 +30,7 @@ export default function Contact() {
             const date = now.toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' })
             const time = now.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
 
-            const text = `🚀 Yangi so'rov!\n\n🆔 ID: ${requestId}\n\n👤 Ism: ${formData.name}\n📞 Telefon: ${formData.phone}\n🔧 Xizmat: ${formData.message}\n💬 Xabar: ${formData.message}\n\n📅 Sana: ${date}, ${time}`
+            const text = `🚀 Yangi so'rov!\n\n🆔 ID: ${requestId}\n\n👤 Ism: ${formData.name}\n📞 Telefon: ${formData.phone}\n🔧 Xizmat: ${formData.service}\n💬 Xabar: ${formData.message}\n\n📅 Sana: ${date}, ${time}`
 
             const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
@@ -44,7 +44,7 @@ export default function Contact() {
 
             if (response.ok) {
                 setStatus({ type: 'success', message: 'So\'rov muvaffaqiyatli yuborildi!' })
-                setFormData({ name: '', phone: '', message: '' })
+                setFormData({ name: '', phone: '', service: '', message: '' })
             } else {
                 throw new Error('Xatolik yuz berdi')
             }
@@ -96,6 +96,21 @@ export default function Contact() {
                             className="w-full bg-[#f9fafb] text-[#000000] px-4 py-4 rounded-xl outline-none focus:ring-2 ring-[#60a5fa]/30 border border-gray-200 focus:border-[#60a5fa]"
                             required
                         />
+                        <select
+                            value={formData.service}
+                            onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                            className="w-full bg-[#f9fafb] text-[#000000] px-4 py-4 rounded-xl outline-none focus:ring-2 ring-[#60a5fa]/30 border border-gray-200 focus:border-[#60a5fa]"
+                            required
+                        >
+                            <option value="" disabled>Xizmat turini tanlang</option>
+                            <option value="Veb-sayt yaratish">Veb-sayt yaratish</option>
+                            <option value="CRM/ERP tizimlar">CRM/ERP tizimlar</option>
+                            <option value="Mobil ilovalar">Mobil ilovalar</option>
+                            <option value="Telegram botlar">Telegram botlar</option>
+                            <option value="Texnik qo'llab-quvvatlash">Texnik qo'llab-quvvatlash</option>
+                            <option value="Maxsus dasturlash">Maxsus dasturlash</option>
+                            <option value="Boshqa">Boshqa</option>
+                        </select>
                         <textarea
                             placeholder="Loyihangiz haqida qisqacha..."
                             rows={4}

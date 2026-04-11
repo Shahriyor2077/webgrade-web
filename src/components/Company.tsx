@@ -33,9 +33,28 @@ export default function Company() {
                         </ul>
                     </div>
 
-                    <div className="bg-white rounded-3xl p-10 md:p-12 shadow-xl border-2 border-gray-100">
+                    <div className="bg-white rounded-3xl p-10 md:p-12 shadow-xl border-2 border-gray-100 hover:shadow-2xl hover:border-[#60a5fa] hover:-translate-y-3 transition-all duration-300">
                         <div className="text-center mb-12">
-                            <div className="w-24 h-24 bg-gradient-to-br from-[#60a5fa] to-[#3b82f6] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <div
+                                className="w-24 h-24 bg-gradient-to-br from-[#60a5fa] to-[#3b82f6] hover:from-[#3b82f6] hover:to-[#2563eb] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transition-all duration-300 cursor-pointer"
+                                style={{
+                                    transform: 'perspective(1000px)',
+                                }}
+                                onMouseMove={(e) => {
+                                    const logo = e.currentTarget
+                                    const rect = logo.getBoundingClientRect()
+                                    const x = e.clientX - rect.left
+                                    const y = e.clientY - rect.top
+                                    const centerX = rect.width / 2
+                                    const centerY = rect.height / 2
+                                    const rotateX = (y - centerY) / 8
+                                    const rotateY = (centerX - x) / 8
+                                    logo.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)'
+                                }}
+                            >
                                 <span className="text-4xl font-bold text-white">W</span>
                             </div>
                             <h3 className="text-2xl font-bold text-[#000000]">Webgrade</h3>
@@ -44,12 +63,35 @@ export default function Company() {
 
                         <div className="grid grid-cols-3 gap-4 mb-8">
                             {[{ icon: Briefcase, value: '13+', label: 'Loyihalar' }, { icon: Users, value: '6+', label: 'Jamoa' }, { icon: Clock, value: '3+', label: 'Yillik tajriba' }].map((stat, i) => (
-                                <div key={i} className="bg-gradient-to-br from-[#eff6ff] to-[#f0f9ff] rounded-2xl p-5 text-center">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-[#60a5fa] to-[#3b82f6] rounded-xl flex items-center justify-center mx-auto mb-4">
-                                        <stat.icon className="w-6 h-6 text-white" />
+                                <div
+                                    key={i}
+                                    className="bg-gradient-to-br from-[#eff6ff] to-[#f0f9ff] hover:from-[#dbeafe] hover:to-[#bfdbfe] rounded-2xl p-5 text-center hover:shadow-lg transition-all duration-300 group cursor-pointer relative overflow-hidden"
+                                    style={{
+                                        transform: 'perspective(1000px)',
+                                    }}
+                                    onMouseMove={(e) => {
+                                        const card = e.currentTarget
+                                        const rect = card.getBoundingClientRect()
+                                        const x = e.clientX - rect.left
+                                        const y = e.clientY - rect.top
+                                        const centerX = rect.width / 2
+                                        const centerY = rect.height / 2
+                                        const rotateX = (y - centerY) / 10
+                                        const rotateY = (centerX - x) / 10
+                                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)'
+                                    }}
+                                >
+                                    <div className="absolute inset-0 bg-gradient-to-br from-[#60a5fa]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div className="relative z-10">
+                                        <div className="w-12 h-12 bg-gradient-to-br from-[#60a5fa] to-[#3b82f6] rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                                            <stat.icon className="w-6 h-6 text-white" />
+                                        </div>
+                                        <h4 className="text-3xl font-bold text-[#000000] mb-1 group-hover:text-[#60a5fa] transition-colors duration-300">{stat.value}</h4>
+                                        <p className="text-[#6b7280] text-xs group-hover:text-[#3b82f6] transition-colors duration-300">{stat.label}</p>
                                     </div>
-                                    <h4 className="text-3xl font-bold text-[#000000] mb-1">{stat.value}</h4>
-                                    <p className="text-[#6b7280] text-xs">{stat.label}</p>
                                 </div>
                             ))}
                         </div>
